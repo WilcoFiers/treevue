@@ -87,8 +87,17 @@
          * When a checkbox is changed, update the aria-selected state.
          */
         function checkboxChange(box) {
-            box.closest('[aria-selected]').attr(
-                        'aria-selected', (box.prop('checked') ? 'true' : 'false'));
+            var item = box.closest('[aria-selected]'),
+                checked = box.prop('checked'),
+                node = box.closest('li');
+            
+            // update the selected state
+            item.attr('aria-selected', checked);
+            
+            // select / unselect all children when the node is a subselector
+            if (box.attr('data-type') === 'subselector') {
+                node.find('ul :checkbox').prop('checked', checked);
+            }
         }
     
         /**
