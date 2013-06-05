@@ -15,9 +15,6 @@
     function addAriaTreeRoles(trees) {
         var collapsed;
         
-        // Insert the tree in a div with role=application
-        trees.wrap("<div role='application'></div>");
-        
         trees.find('li').attr( // define tree nodes
             'role', 'treeitem'
         )
@@ -84,17 +81,16 @@
         addAriaSelectStates(trees)
     };
     
-    /**
-     * When a checkbox is changed, update the aria-selected state.
-     */
-    function checkboxChange(box) {
-        box.closest('[aria-selected]').attr(
-                    'aria-selected', (box.prop('checked') ? 'true' : 'false'));
-    }
-    
-    
     // When the document is loaded, attach event handlers for all vuetrees 
     $(function () {
+        /**
+         * When a checkbox is changed, update the aria-selected state.
+         */
+        function checkboxChange(box) {
+            box.closest('[aria-selected]').attr(
+                        'aria-selected', (box.prop('checked') ? 'true' : 'false'));
+        }
+    
         // pointer input
         $('body').on('click', '.treevue li[aria-expanded]', function (event) {
             if (event.target === this) {
@@ -106,6 +102,7 @@
         // Keep aria-selected state in sync with the checkbox
         }).on('change', '.treevue :checkbox', function (event) {
             checkboxChange($(this));
+            
         
         // keyboard input
         }).on('keydown', '.treevue li', function (event) {
