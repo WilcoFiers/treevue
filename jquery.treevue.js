@@ -101,8 +101,9 @@
         
         // Keep aria-selected state in sync with the checkbox
         }).on('change', '.treevue :checkbox', function (event) {
-            checkboxChange($(this));
-            
+            var $this = $(this);
+            checkboxChange($this);
+            focusItem($this.closest('[role=treeitem]'));
         
         // keyboard input
         }).on('keydown', '.treevue li', function (event) {
