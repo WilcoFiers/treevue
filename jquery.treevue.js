@@ -48,9 +48,11 @@
      */
     function focusItem(elm) {
         var tree = elm.closest('.treevue');
-        tree.find('.' + focusClass).removeClass(focusClass).attr('tabindex', -1);
-        elm.focus().attr('tabindex', 0);
-        elm.addClass(focusClass);
+        if (tree.length === 1) {
+            tree.find('.' + focusClass).removeClass(focusClass).attr('tabindex', -1);
+            elm.focus().attr('tabindex', 0);
+            elm.addClass(focusClass);
+        }
     }
     
     /**
