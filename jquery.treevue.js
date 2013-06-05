@@ -1,3 +1,4 @@
+/*jslint white: true */
 /**
  * Treevue is a jQuery plugin for accessible tree views. It uses wai-aria
  * for full feature support with modern screenreaders.
@@ -23,7 +24,7 @@
         
         trees.find('li').attr( // define tree nodes
             'role', 'treeitem'
-        )
+        );
         trees.find('ul, ol').attr({ // define branches
             'role': 'group'
         }).closest('li').attr(ariaExp, true).addClass(expandedCls);
@@ -55,18 +56,6 @@
             }
         
         }).closest('.treevue').attr('aria-multiselectable', true);
-    }
-    
-    /**
-     * Move the focus to an item in the tree.
-     */
-    function focusItem(elm) {
-        var tree = elm.closest('.treevue');
-        if (tree.length === 1) {
-            tree.find('.' + focusClass).removeClass(focusClass).attr('tabindex', -1);
-            elm.focus().attr('tabindex', 0);
-            elm.addClass(focusClass);
-        }
     }
     
     /**
@@ -103,6 +92,19 @@
     
     // When the document is loaded, attach event handlers for all vuetrees 
     $(function () {
+        /**
+         * Move the focus to an item in the tree.
+         */
+        function focusItem(elm) {
+            var tree = elm.closest('.treevue');
+            if (tree.length === 1) {
+                tree.find('.' + focusClass).removeClass(focusClass).attr(
+                        'tabindex', -1);
+                elm.focus().attr('tabindex', 0);
+                elm.addClass(focusClass);
+            }
+        }
+    
         /**
          * When a checkbox is changed, update the aria-selected state.
          */
@@ -158,7 +160,7 @@
         /**
          * Keep aria-selected state in sync with the checkbox
          */
-        }).on('change', '.treevue :checkbox', function (event) {
+        }).on('change', '.treevue :checkbox', function () {
             var $this = $(this);
             checkboxChange($this);
             focusItem($this.closest('li'));
@@ -167,7 +169,7 @@
          * keyboard input
          */
         }).on('keydown', '.treevue li', function (event) {
-            var expanded, 
+            var expanded, checkbox,
                 keyCode = event.keyCode,
                 $this = $(this);
             
@@ -179,7 +181,7 @@
             // Press RETURN
             if (keyCode === 13 && $this.attr(ariaSel) !== undefined) {
                 //locate the checkbox and invert it and the select value
-                var checkbox = $this.find(':checkbox').first();
+                checkbox = $this.find(':checkbox').first();
                 checkbox.prop('checked', !checkbox.prop('checked'));
                 checkboxChange(checkbox);
                 
@@ -225,4 +227,4 @@
         });
     });
     
-})(jQuery);
+}(jQuery));
