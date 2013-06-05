@@ -7,7 +7,10 @@
 (function($) {
     'use strict';
     
-    var focusClass = 'treevue-focus';
+    var focusClass = 'treevue-focus',
+        ariaExp    = 'aria-expanded',
+        expndClass = 'treevue-expanded',
+        colpsClass = 'treevue-collapsed';
     
     /**
      * Add ARIA roles
@@ -20,7 +23,7 @@
         )
         trees.find('ul, ol').attr({ // define branches
             'role': 'group'
-        }).closest('li').attr('aria-expanded', true);
+        }).closest('li').attr(ariaExp, true).addClass(expndClass);
         
         trees.attr('role', 'tree');
         
@@ -28,7 +31,8 @@
         collapsed = trees.find('ul[aria-hidden=true], ' +
                                'ol[aria-hidden=true]').closest('li');
         collapsed = collapsed.find('[aria-expanded=true]').andSelf();
-        collapsed.attr('aria-expanded', 'false');
+        collapsed.attr(ariaExp, 'false');
+        collapsed.removeClass(expndClass).addClass(colpsClass);
         collapsed.find('ul, ol').attr('aria-hidden', true).hide();
     }
     
@@ -61,11 +65,14 @@
      */
     function toggleBranch(branch) {
         var subtree = branch.find('ul, ol').first();
-        if (branch.attr('aria-expanded') === 'true') {
-            branch.attr('aria-expanded', false);
+        if (branch.hasClass(expndClass)) {
+            branch.attr(ariaExp, false);
+            branch.addClass(colpsClass).removeClass(expndClass);
             subtree.hide(200).attr('aria-hidden', true);
+            
         } else {
-            branch.attr('aria-expanded', true);
+            branch.attr(ariaExp, true);
+            branch.addClass(expndClass).removeClass(colpsClass);
             subtree.show(200).attr('aria-hidden', false);
         }
     }
@@ -130,7 +137,8 @@
         /**
          * pointer input
          */
-        $('body').on('click', '.treevue li[aria-expanded]', function (event) {
+        $('body').on('click', '.treevue li.' + expndClass +
+                              ', .treevue li.' + colpsClass, function (event) {
             if (event.target === this) {
                 var $this = $(this);
                 event.preventDefault();
@@ -144,7 +152,7 @@
         }).on('change', '.treevue :checkbox', function (event) {
             var $this = $(this);
             checkboxChange($this);
-            focusItem($this.closest('[role=treeitem]'));
+            focusItem($this.closest('li'));
         
         /**
          * keyboard input
@@ -157,7 +165,7 @@
             if (event.target !== this) {
                 return;
             }
-            expanded = $this.attr('aria-expanded');
+            expanded = $this.hasClass(expndClass);
             
             // Press RETURN
             if (keyCode === 13 && $this.attr('aria-selected') !== undefined) {
@@ -167,7 +175,7 @@
                 checkboxChange(checkbox);
                 
             } else if (keyCode === 40) { // press DOWN
-                if (expanded === 'true') { // enter a branch
+                if (expanded) { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
                 } else if ($this.next().length === 0) { // exit a branch
                     focusItem($this.parent().closest('li').next());
@@ -176,7 +184,7 @@
                 }
                 
             } else if (keyCode === 38) { // press UP
-                if ($this.prev().attr('aria-expanded') === 'true') { // enter a branch
+                if ($this.prev().hasClass(expndClass)) { // enter a branch
                     focusItem($this.prev().find('ul li, ol li').last());
                 } else if ($this.prev().length === 0) { // exit a branch
                     focusItem($this.parent().closest('li'));
@@ -185,16 +193,16 @@
                 }
                 
             } else if (keyCode === 37) { // press LEFT
-                if (expanded === 'true') {
+                if (expanded) {
                     toggleBranch($this);
                 } else { // exit the current branch
                     focusItem($this.parent().closest('li'));
                 }
                 
             } else if (keyCode === 39) { // press RIGHT
-                if (expanded === 'false') {
+                if ($this.hasClass(colpsClass)) {
                     toggleBranch($this);
-                } else if (expanded === 'true') { // enter a branch
+                } else if (expanded) { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
                 }
             

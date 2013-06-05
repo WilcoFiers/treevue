@@ -4,10 +4,10 @@
     margin-left:-18px;
     padding-left:18px;
 }
-.treevue li[aria-expanded=true] {
+.treevue li.treevue-expanded {
     background: url(opened.png) no-repeat 0 .15em;
 }
-.treevue li[aria-expanded=false] {
+.treevue li.treevue-collapsed {
     background: url(closed.png) no-repeat 0 .15em;
 }
 .treevue label:hover {
