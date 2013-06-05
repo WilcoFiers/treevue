@@ -20,16 +20,17 @@
      * Add ARIA roles
      */
     function addAriaTreeRoles(trees) {
-        var collapsed;
+        var collapsed,
+            role = 'role';
         
         trees.find('li').attr( // define tree nodes
-            'role', 'treeitem'
+            role, 'treeitem'
         );
         trees.find('ul, ol').attr({ // define branches
-            'role': 'group'
+            role: 'group'
         }).closest('li').attr(ariaExp, true).addClass(expandedCls);
         
-        trees.attr('role', 'tree');
+        trees.attr(role, 'tree');
         
         // Collapse nodes nested within a ul with aria-hidden
         collapsed = trees.find('ul[aria-hidden=true], ' +
