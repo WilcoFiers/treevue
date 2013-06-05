@@ -7,10 +7,13 @@
 (function($) {
     'use strict';
     
-    var focusClass = 'treevue-focus',
-        ariaExp    = 'aria-expanded',
-        expndClass = 'treevue-expanded',
-        colpsClass = 'treevue-collapsed';
+    var focusClass  = 'treevue-focus',
+        ariaExp     = 'aria-expanded',
+        ariaSel     = 'aria-selected',
+        ariaHide    = 'aria-hidden',
+        expandedCls = 'treevue-expanded',
+        collapseCls = 'treevue-collapsed',
+        selectedCls = 'treevue-selected';
     
     /**
      * Add ARIA roles
@@ -23,7 +26,7 @@
         )
         trees.find('ul, ol').attr({ // define branches
             'role': 'group'
-        }).closest('li').attr(ariaExp, true).addClass(expndClass);
+        }).closest('li').attr(ariaExp, true).addClass(expandedCls);
         
         trees.attr('role', 'tree');
         
@@ -32,8 +35,8 @@
                                'ol[aria-hidden=true]').closest('li');
         collapsed = collapsed.find('[aria-expanded=true]').andSelf();
         collapsed.attr(ariaExp, 'false');
-        collapsed.removeClass(expndClass).addClass(colpsClass);
-        collapsed.find('ul, ol').attr('aria-hidden', true).hide();
+        collapsed.removeClass(expandedCls).addClass(collapseCls);
+        collapsed.find('ul, ol').attr(ariaHide, true).hide();
     }
     
     
@@ -43,7 +46,13 @@
     function addAriaSelectStates(trees) {
         trees.find(':checkbox').each(function () {
             var $this = $(this).attr('tabindex', -1);
-            $this.closest('li').attr('aria-selected', $this.prop('checked'));
+            if ($this.prop('checked')) {
+                $this.addClass(selectedCls);
+                $this.closest('li').attr(ariaSel, true);
+            } else {
+                $this.removeClass(selectedCls);
+                $this.closest('li').attr(ariaSel, false);
+            }
         
         }).closest('.treevue').attr('aria-multiselectable', true);
     }
@@ -65,15 +74,15 @@
      */
     function toggleBranch(branch) {
         var subtree = branch.find('ul, ol').first();
-        if (branch.hasClass(expndClass)) {
+        if (branch.hasClass(expandedCls)) {
             branch.attr(ariaExp, false);
-            branch.addClass(colpsClass).removeClass(expndClass);
-            subtree.hide(200).attr('aria-hidden', true);
+            branch.addClass(collapseCls).removeClass(expandedCls);
+            subtree.hide(200).attr(ariaHide, true);
             
         } else {
             branch.attr(ariaExp, true);
-            branch.addClass(expndClass).removeClass(colpsClass);
-            subtree.show(200).attr('aria-hidden', false);
+            branch.addClass(expandedCls).removeClass(collapseCls);
+            subtree.show(200).attr(ariaHide, false);
         }
     }
     
@@ -103,7 +112,7 @@
                 node = box.closest('li');
             
             // update the selected state
-            item.attr('aria-selected', checked);
+            item.attr(ariaSel, checked);
             
             // select / unselect all children when the node is a subselector
             if (box.attr('data-type') === 'subselector') {
@@ -137,8 +146,8 @@
         /**
          * pointer input
          */
-        $('body').on('click', '.treevue li.' + expndClass +
-                              ', .treevue li.' + colpsClass, function (event) {
+        $('body').on('click', '.treevue li.' + expandedCls +
+                              ', .treevue li.' + collapseCls, function (event) {
             if (event.target === this) {
                 var $this = $(this);
                 event.preventDefault();
@@ -165,10 +174,10 @@
             if (event.target !== this) {
                 return;
             }
-            expanded = $this.hasClass(expndClass);
+            expanded = $this.hasClass(expandedCls);
             
             // Press RETURN
-            if (keyCode === 13 && $this.attr('aria-selected') !== undefined) {
+            if (keyCode === 13 && $this.attr(ariaSel) !== undefined) {
                 //locate the checkbox and invert it and the select value
                 var checkbox = $this.find(':checkbox').first();
                 checkbox.prop('checked', !checkbox.prop('checked'));
@@ -184,7 +193,7 @@
                 }
                 
             } else if (keyCode === 38) { // press UP
-                if ($this.prev().hasClass(expndClass)) { // enter a branch
+                if ($this.prev().hasClass(expandedCls)) { // enter a branch
                     focusItem($this.prev().find('ul li, ol li').last());
                 } else if ($this.prev().length === 0) { // exit a branch
                     focusItem($this.parent().closest('li'));
@@ -200,7 +209,7 @@
                 }
                 
             } else if (keyCode === 39) { // press RIGHT
-                if ($this.hasClass(colpsClass)) {
+                if ($this.hasClass(collapseCls)) {
                     toggleBranch($this);
                 } else if (expanded) { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
