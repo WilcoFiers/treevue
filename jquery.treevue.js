@@ -39,7 +39,8 @@
         trees.find(':checkbox').each(function () {
             var $this = $(this).attr('tabindex', -1);
             $this.closest('li').attr('aria-selected', $this.prop('checked'));
-        });
+        
+        }).closest('.treevue').attr('aria-multiselectable', true);
     }
     
     /**
