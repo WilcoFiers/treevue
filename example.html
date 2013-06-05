@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <link rel="stylesheet" href="tree.css">
+</head>
+<body>
+
+<h4>Accessibility Criteria</h4>
+<ul>
+  <li>Guideline 1.1 Text Alternatives<ul>
+      <li>1.1.1 Non-text Content</li>
+  </ul></li>
+  <li>Guideline 1.2 Time-based Media<ul aria-hidden=true>
+      <li>1.2.1 Audio-only and Video-only (Prerecorded)<ul>
+          <li>1.2.1a ???</li>
+      </ul></li>
+  </ul></li>
+</ul>
+
+<h4>Assistive Technology</h4>
+<ul>
+  <li>
+      <label for="jaws">Jaws</label><ul>
+      <li><input type="checkbox" id="jaws119" />
+          <label for="jaws119">Jaws 11.9</label></li>
+      <li><input type="checkbox" id="jaws1212" />
+          <label for="jaws1212">Jaws 12.1.2</label></li>
+      <li><input type="checkbox" id="jaws137" />
+          <label for="jaws137">Jaws 13.7 beta</label></li>
+  </ul></li>
+  <li><input type="checkbox" id="nvda" />
+      <label for="nvda"> NVDA</label><ul>
+      <li><input type="checkbox" id="nvda119" />
+          <label for="nvda119"> NVDA 11.9</label></li>
+      <li><input type="checkbox" id="nvda1212" />
+          <label for="nvda1212"> NVDA 12.1.2</label></li>
+      <li><input type="checkbox" id="nvda137" />
+          <label for="nvda137"> NVDA 13.7 beta</label></li>
+  </ul></li>
+</ul>
+
+<h4>Web Browser</h4>
+<ul>
+  <li>IE<ul>
+      <li>IE 8.1</li>
+      <li>IE 7</li>
+      <li>IE 9.2</li>
+  </ul></li>
+  <li>Firefox<ul>
+      <li>Firefox 11.9</li>
+      <li>Firefox 12.1.2</li>
+      <li>Firefox 13.7 beta</li>
+  </ul></li>
+</ul>
+
+<h4>Web Technology</h4>
+<ul>
+  <li>HTML and XHTML Techniques</li>
+  <li>CSS Techniques </li>
+  <li>ARIA Techniques</li>
+</ul>
+
+<h4>Operating System</h4>
+<ul>
+  <li>Windows<ul>
+      <li>6</li>
+      <li>XP</li>
+  </ul></li>
+  <li>Linux<ul>
+      <li>Ubuntu x86 12</li>
+  </ul></li>
+</ul>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="jquery.treevue.js"></script>
+  <script>
+    jQuery(function ($) {
+        $('body > ul').treevue();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+.treevue li {
+    list-style:none;
+    /* Create a little space to the left for the open/close images */
+    margin-left:-18px;
+    padding-left:18px;
+}
+.treevue li[aria-expanded=true] {
+    background: url(opened.png) no-repeat 0 .15em;
+}
+.treevue li[aria-expanded=false] {
+    background: url(closed.png) no-repeat 0 .15em;
+}
+.treevue label:hover {
+    background:rgba(0,0,0, 0.05);
+}
+
+/**
+ * Adding aria-hidden="true" to any ul that would be included in a treevue will
+ * ensure that it is closed when truevue starts
+ */
+.treevue ul[aria-hidden=true] {
+    display:none;
+}
