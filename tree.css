@@ -13,12 +13,3 @@
 .treevue label:hover {
     background:rgba(0,0,0, 0.05);
 }
-
-/**
- * Adding aria-hidden="true" to any ul that would be included in a treevue will
- * ensure that it is closed when truevue starts
- */
-.treevue ul[aria-hidden=true],
-.treevue ol[aria-hidden=true] {
-    display:none;
-}

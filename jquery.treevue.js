@@ -29,7 +29,7 @@
                                'ol[aria-hidden=true]').closest('li');
         collapsed = collapsed.find('[aria-expanded=true]').andSelf();
         collapsed.attr('aria-expanded', 'false');
-        collapsed.find('ul, ol').attr('aria-hidden', true);
+        collapsed.find('ul, ol').attr('aria-hidden', true).hide();
     }
     
     
@@ -78,6 +78,7 @@
         trees.addClass('treevue');
         trees.find('li').attr('tabindex', -1);
         trees.find('> :first-child').attr('tabindex', 0).addClass(focusClass);
+        
         
         // Add WAI-ARIA role and state
         addAriaTreeRoles(trees);
