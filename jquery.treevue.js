@@ -20,7 +20,7 @@
         )
         trees.find('ul').attr({ // define branches
             'role': 'group'
-        }).closest('li').attr('aria-expanded', 'true');
+        }).closest('li').attr('aria-expanded', true);
         
         trees.attr('role', 'tree');
         
@@ -28,7 +28,7 @@
         collapsed = trees.find('ul[aria-hidden=true]').closest('li');
         collapsed = collapsed.find('[aria-expanded=true]').andSelf();
         collapsed.attr('aria-expanded', 'false');
-        collapsed.find('ul').attr('aria-hidden', 'true');
+        collapsed.find('ul').attr('aria-hidden', true);
     }
     
     
@@ -36,10 +36,9 @@
      * Where checkboxes are included allow selection
      */
     function addAriaSelectStates(trees) {
-        var selectable = trees.find(':checkbox').attr({
-            'tabindex': '-1'
-        }).closest('li').attr({
-            'aria-selected': 'false'
+        trees.find(':checkbox').each(function () {
+            var $this = $(this).attr('tabindex', -1);
+            $this.closest('li').attr('aria-selected', $this.prop('checked'));
         });
     }
     
@@ -59,11 +58,11 @@
     function toggleBranch(branch) {
         var subtree = branch.children().filter('ul');
         if (branch.attr('aria-expanded') === 'true') {
-            branch.attr('aria-expanded', 'false');
-            subtree.hide(200).attr('aria-hidden', 'true');
+            branch.attr('aria-expanded', false);
+            subtree.hide(200).attr('aria-hidden', true);
         } else {
-            branch.attr('aria-expanded', 'true');
-            subtree.show(200).attr('aria-hidden', 'false');
+            branch.attr('aria-expanded', true);
+            subtree.show(200).attr('aria-hidden', false);
         }
     }
     
@@ -76,9 +75,9 @@
         trees.find('li').attr('tabindex', -1);
         trees.find('> :first-child').attr('tabindex', 0).addClass(focusClass);
         
+        // Add WAI-ARIA role and state
         addAriaTreeRoles(trees);
-        
-        addAriaSelectStates(trees)
+        addAriaSelectStates(trees);
     };
     
     // When the document is loaded, attach event handlers for all vuetrees 
@@ -91,21 +90,28 @@
                         'aria-selected', (box.prop('checked') ? 'true' : 'false'));
         }
     
-        // pointer input
+        /**
+         * pointer input
+         */
         $('body').on('click', '.treevue li[aria-expanded]', function (event) {
             if (event.target === this) {
+                var $this = $(this);
                 event.preventDefault();
-                toggleBranch($(this));
-                focusItem($(this));
+                toggleBranch($this);
+                focusItem($this);
             }
         
-        // Keep aria-selected state in sync with the checkbox
+        /**
+         * Keep aria-selected state in sync with the checkbox
+         */
         }).on('change', '.treevue :checkbox', function (event) {
             var $this = $(this);
             checkboxChange($this);
             focusItem($this.closest('[role=treeitem]'));
         
-        // keyboard input
+        /**
+         * keyboard input
+         */
         }).on('keydown', '.treevue li', function (event) {
             var expanded, 
                 keyCode = event.keyCode,
