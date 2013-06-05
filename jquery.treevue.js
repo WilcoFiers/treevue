@@ -60,7 +60,7 @@
      * Toggle the visibility of the branch
      */
     function toggleBranch(branch) {
-        var subtree = branch.children().filter('ul, ol');
+        var subtree = branch.find('ul, ol').first();
         if (branch.attr('aria-expanded') === 'true') {
             branch.attr('aria-expanded', false);
             subtree.hide(200).attr('aria-hidden', true);
@@ -169,7 +169,7 @@
                 if (expanded === 'true') { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
                 } else if ($this.next().length === 0) { // exit a branch
-                    focusItem($this.parent().parent().next());
+                    focusItem($this.parent().closest('li').next());
                 } else { // next sibling
                     focusItem($this.next());
                 }
@@ -178,7 +178,7 @@
                 if ($this.prev().attr('aria-expanded') === 'true') { // enter a branch
                     focusItem($this.prev().find('ul li, ol li').last());
                 } else if ($this.prev().length === 0) { // exit a branch
-                    focusItem($this.parent().parent());
+                    focusItem($this.parent().closest('li'));
                 } else { // prev sibling
                     focusItem($this.prev());
                 }
@@ -187,7 +187,7 @@
                 if (expanded === 'true') {
                     toggleBranch($this);
                 } else { // exit the current branch
-                    focusItem($this.parent().parent());
+                    focusItem($this.parent().closest('li'));
                 }
                 
             } else if (keyCode === 39) { // press RIGHT
