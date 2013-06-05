@@ -18,17 +18,18 @@
         trees.find('li').attr( // define tree nodes
             'role', 'treeitem'
         )
-        trees.find('ul').attr({ // define branches
+        trees.find('ul, ol').attr({ // define branches
             'role': 'group'
         }).closest('li').attr('aria-expanded', true);
         
         trees.attr('role', 'tree');
         
         // Collapse nodes nested within a ul with aria-hidden
-        collapsed = trees.find('ul[aria-hidden=true]').closest('li');
+        collapsed = trees.find('ul[aria-hidden=true], ' +
+                               'ol[aria-hidden=true]').closest('li');
         collapsed = collapsed.find('[aria-expanded=true]').andSelf();
         collapsed.attr('aria-expanded', 'false');
-        collapsed.find('ul').attr('aria-hidden', true);
+        collapsed.find('ul, ol').attr('aria-hidden', true);
     }
     
     
@@ -59,7 +60,7 @@
      * Toggle the visibility of the branch
      */
     function toggleBranch(branch) {
-        var subtree = branch.children().filter('ul');
+        var subtree = branch.children().filter('ul, ol');
         if (branch.attr('aria-expanded') === 'true') {
             branch.attr('aria-expanded', false);
             subtree.hide(200).attr('aria-hidden', true);
@@ -98,7 +99,7 @@
             
             // select / unselect all children when the node is a subselector
             if (box.attr('data-type') === 'subselector') {
-                node.find('ul :checkbox').prop('checked', checked);
+                node.find('ul :checkbox, ol :checkbox').prop('checked', checked);
             }
             
             // Locate any parent nodes
@@ -112,7 +113,7 @@
                         checkbox.attr('data-type') === 'subselector') {
                     
                     // All boxes are checked to check the subselector
-                    boxes = $this.find('ul :checkbox');
+                    boxes = $this.find('ul :checkbox, ol :checkbox');
                     if (boxes.length === boxes.filter(':checked').length) {
                         checkbox.prop('checked', true);
                         
@@ -166,7 +167,7 @@
                 
             } else if (keyCode === 40) { // press DOWN
                 if (expanded === 'true') { // enter a branch
-                    focusItem($this.find('ul li').first());
+                    focusItem($this.find('ul li, ol li').first());
                 } else if ($this.next().length === 0) { // exit a branch
                     focusItem($this.parent().parent().next());
                 } else { // next sibling
@@ -175,7 +176,7 @@
                 
             } else if (keyCode === 38) { // press UP
                 if ($this.prev().attr('aria-expanded') === 'true') { // enter a branch
-                    focusItem($this.prev().find('ul li').last());
+                    focusItem($this.prev().find('ul li, ol li').last());
                 } else if ($this.prev().length === 0) { // exit a branch
                     focusItem($this.parent().parent());
                 } else { // prev sibling
@@ -193,7 +194,7 @@
                 if (expanded === 'false') {
                     toggleBranch($this);
                 } else if (expanded === 'true') { // enter a branch
-                    focusItem($this.find('ul li').first());
+                    focusItem($this.find('ul li, ol li').first());
                 }
             
             } else { // no known keys activated, so nothing has to be prevented

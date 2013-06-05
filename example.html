@@ -8,16 +8,16 @@
 <body>
 
 <h4>Accessibility Criteria</h4>
-<ul>
-  <li>Guideline 1.1 Text Alternatives<ul>
+<ol>
+  <li>Guideline 1.1 Text Alternatives<ol>
       <li>1.1.1 Non-text Content</li>
-  </ul></li>
-  <li>Guideline 1.2 Time-based Media<ul aria-hidden=true>
-      <li>1.2.1 Audio-only and Video-only (Prerecorded)<ul>
+  </ol></li>
+  <li>Guideline 1.2 Time-based Media<ol aria-hidden="true">
+      <li>1.2.1 Audio-only and Video-only (Prerecorded)<ol>
           <li>1.2.1a ???</li>
-      </ul></li>
-  </ul></li>
-</ul>
+      </ol></li>
+  </ol></li>
+</ol>
 
 <h4>Assistive Technology</h4>
 <ul>
@@ -77,7 +77,7 @@
   <script src="jquery.treevue.js"></script>
   <script>
     jQuery(function ($) {
-        $('body > ul').treevue();
+        $('body > ul, body > ol').treevue();
     });
   </script>
 </body>
