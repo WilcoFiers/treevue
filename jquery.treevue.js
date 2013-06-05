@@ -98,6 +98,29 @@
             if (box.attr('data-type') === 'subselector') {
                 node.find('ul :checkbox').prop('checked', checked);
             }
+            
+            // Locate any parent nodes
+            node.parents('.treevue li').each(function () {
+                var boxes,
+                    $this = $(this),
+                    checkbox = $(':checkbox', this).first();
+                
+                // check if the parents have a subselector
+                if (checkbox.closest('li').is($this) &&
+                        checkbox.attr('data-type') === 'subselector') {
+                    
+                    // All boxes are checked to check the subselector
+                    boxes = $this.find('ul :checkbox');
+                    if (boxes.length === boxes.filter(':checked').length) {
+                        checkbox.prop('checked', true);
+                        
+                    // Subselector is unchecked
+                    } else if (checked === false) {
+                        checkbox.prop('checked', false);
+                    }
+                }
+            });
+            
         }
     
         /**
