@@ -9,38 +9,46 @@
     'use strict';
     
     var treeFallback, branchFallback,
-        fallbackCss = {
-            'position': 'absolute',
-            'width': '0',
-            'overflow': 'hidden'
-        },  
         // ARIA-properties
-        ariaExp       = 'data-aria-expanded',
-        ariaSel       = 'data-aria-selected',
-        ariaHide      = 'data-aria-hidden',
+        ariaExp       = 'aria-expanded',
+        ariaSel       = 'aria-selected',
+        ariaHide      = 'aria-hidden',
+        role          = 'role',
         // className values
         focusClass    = 'treevue-focus',
         expandedCls   = 'treevue-expanded',
         collapseCls   = 'treevue-collapsed',
         selectedCls   = 'treevue-selected',
-        // Text for l11n
+        // Text for l10n
         textExpanded  = 'Collapse node',
         textCollapsed = 'Expand node',
-        textTree      = 'Tree structure';
+        textTree      = 'Tree view',
+        // Setup properties of the fallback
+        fallbackCss = {
+            'position': 'absolute',
+            'width': '0',
+            'overflow': 'hidden'
+        },
+        fallbackAria = {};
+    fallbackAria[role] = 'document';
+    fallbackAria[ariaHide] = true;
     
     // Set up nodes that work as fallbacks for AT that don't
-    // support ARIA    
+    // support ARIA
     treeFallback   = $('<span class="treevue_fallback">' + 
-                      textTree + ', </span>').css(fallbackCss);
-    branchFallback = $('<span class="treevue_fallback_branch"><button>' +
-                        textExpanded + '</button></span>').css(fallbackCss);
+                       textTree + ', </span>');
+    branchFallback = $('<span class="treevue_fallback_branch">' + 
+                       '<button tabindex="-1">' + textExpanded +
+                       '</button></span>');
+    
+    treeFallback.css(fallbackCss).attr(fallbackAria);
+    branchFallback.css(fallbackCss).attr(fallbackAria);
     
     /**
      * Add ARIA roles
      */
     function addAriaTreeRoles(trees) {
-        var collapsed,
-            role = 'data-role';
+        var collapsed;
         
         trees.find('li').attr( // define tree nodes
             role, 'treeitem'
@@ -48,9 +56,8 @@
         
         trees.find('ul, ol').attr({ // define branches
             role: 'group'
-        }).closest('li').
-                attr(ariaExp, true).addClass(expandedCls).
-                prepend(branchFallback);
+        }).before(branchFallback).closest('li').
+                attr(ariaExp, true).addClass(expandedCls);
         
         trees.attr(role, 'tree');
         
@@ -89,7 +96,6 @@
             first = trees.find('> :first-child');
         trees.addClass('treevue');
         trees.find('li').attr('tabindex', -1);
-        
         
         // Add WAI-ARIA role and state
         addAriaTreeRoles(trees);
