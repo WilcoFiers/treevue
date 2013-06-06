@@ -15,25 +15,25 @@
             'overflow': 'hidden'
         },  
         // ARIA-properties
-        ariaExp     = 'data-aria-expanded',
-        ariaSel     = 'data-aria-selected',
-        ariaHide    = 'data-aria-hidden',
+        ariaExp       = 'data-aria-expanded',
+        ariaSel       = 'data-aria-selected',
+        ariaHide      = 'data-aria-hidden',
         // className values
-        focusClass  = 'treevue-focus',
-        expandedCls = 'treevue-expanded',
-        collapseCls = 'treevue-collapsed',
-        selectedCls = 'treevue-selected',
+        focusClass    = 'treevue-focus',
+        expandedCls   = 'treevue-expanded',
+        collapseCls   = 'treevue-collapsed',
+        selectedCls   = 'treevue-selected',
         // Text for i11n
-        textExpanded = 'Expanded node',
-        textCollapsed = 'Collapsed node',
-        textTree    = 'Tree structure';
+        textExpanded  = 'Collapse node',
+        textCollapsed = 'Expand node',
+        textTree      = 'Tree structure';
     
     // Set up nodes that work as fallbacks for AT that don't
     // support ARIA    
     treeFallback   = $('<span class="treevue_fallback">' + 
                       textTree + ', </span>').css(fallbackCss);
-    branchFallback = $('<span class="treevue_fallback_branch">' +
-                        textExpanded + ', </span>').css(fallbackCss);
+    branchFallback = $('<span class="treevue_fallback_branch"><button>' +
+                        textExpanded + '</button></span>').css(fallbackCss);
     
     /**
      * Add ARIA roles
@@ -45,9 +45,11 @@
         trees.find('li').attr( // define tree nodes
             role, 'treeitem'
         );
+        
         trees.find('ul, ol').attr({ // define branches
             role: 'group'
-        }).closest('li').attr(ariaExp, true).addClass(expandedCls).
+        }).closest('li').
+                attr(ariaExp, true).addClass(expandedCls).
                 prepend(branchFallback);
         
         trees.attr(role, 'tree');
@@ -104,17 +106,20 @@
          */
         function toggleBranch(branch) {
             var subtree = branch.find('ul, ol').first();
+            
             if (branch.hasClass(expandedCls)) {
                 branch.attr(ariaExp, false);
                 branch.addClass(collapseCls).removeClass(expandedCls);
                 subtree.hide(200).attr(ariaHide, true);
-                branch.find('.treevue_fallback_branch').text(textCollapsed);
+                branch.find('.treevue_fallback_branch button').
+                        text(textCollapsed);
                 
             } else {
                 branch.attr(ariaExp, true);
                 branch.addClass(expandedCls).removeClass(collapseCls);
                 subtree.show(200).attr(ariaHide, false);
-                branch.find('.treevue_fallback_branch').text(textExpanded);
+                branch.find('.treevue_fallback_branch button').
+                        text(textExpanded);
             }
         }
         
@@ -252,6 +257,10 @@
             event.preventDefault();
             event.stopPropagation();
             return false;
+            
+        // Toggle the branch when clicking the fallback button
+        }).on('click', '.treevue_fallback_branch button', function () {
+            toggleBranch($(this).closest('li'));
         });
     });
     
