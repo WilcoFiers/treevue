@@ -264,13 +264,17 @@
             
             } else if (keyCode >= 65 && keyCode <= 90) { // press letter key
                 var chr = String.fromCharCode(keyCode);
+                // take all children, all next siblings, and all the 
+                // next siblings of it's ancesters
                 var next = $this.parents('li', $this.closest('.treevue')).
                         andSelf().nextAll().add($this.find('li')).
                         find('li').andSelf().
+                        // Find the first node thst starts with the pressed char
                         filter(function () {
                             var text = $.trim($(this).text());
                             return text[0].toUpperCase() === chr;
                         }).first();
+                
                 focusItem(next);
             
             } else { // no known keys activated, so nothing has to be prevented
