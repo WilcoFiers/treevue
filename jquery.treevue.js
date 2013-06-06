@@ -23,7 +23,7 @@
         expandedCls   = 'treevue-expanded',
         collapseCls   = 'treevue-collapsed',
         selectedCls   = 'treevue-selected',
-        // Text for i11n
+        // Text for l11n
         textExpanded  = 'Collapse node',
         textCollapsed = 'Expand node',
         textTree      = 'Tree structure';
