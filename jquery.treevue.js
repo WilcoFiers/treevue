@@ -8,34 +8,54 @@
 (function($) {
     'use strict';
     
-    var focusClass  = 'treevue-focus',
-        ariaExp     = 'aria-expanded',
-        ariaSel     = 'aria-selected',
-        ariaHide    = 'aria-hidden',
+    var treeFallback, branchFallback,
+        fallbackCss = {
+            'position': 'absolute',
+            'width': '0',
+            'overflow': 'hidden'
+        },  
+        // ARIA-properties
+        ariaExp     = 'data-aria-expanded',
+        ariaSel     = 'data-aria-selected',
+        ariaHide    = 'data-aria-hidden',
+        // className values
+        focusClass  = 'treevue-focus',
         expandedCls = 'treevue-expanded',
         collapseCls = 'treevue-collapsed',
-        selectedCls = 'treevue-selected';
+        selectedCls = 'treevue-selected',
+        // Text for i11n
+        textExpanded = 'Expanded node',
+        textCollapsed = 'Collapsed node',
+        textTree    = 'Tree structure';
+    
+    // Set up nodes that work as fallbacks for AT that don't
+    // support ARIA    
+    treeFallback   = $('<span class="treevue_fallback">' + 
+                      textTree + ', </span>').css(fallbackCss);
+    branchFallback = $('<span class="treevue_fallback_branch">' +
+                        textExpanded + ', </span>').css(fallbackCss);
     
     /**
      * Add ARIA roles
      */
     function addAriaTreeRoles(trees) {
         var collapsed,
-            role = 'role';
+            role = 'data-role';
         
         trees.find('li').attr( // define tree nodes
             role, 'treeitem'
         );
         trees.find('ul, ol').attr({ // define branches
             role: 'group'
-        }).closest('li').attr(ariaExp, true).addClass(expandedCls);
+        }).closest('li').attr(ariaExp, true).addClass(expandedCls).
+                prepend(branchFallback);
         
         trees.attr(role, 'tree');
         
-        // Collapse nodes nested within a ul with aria-hidden
+        // Collapse nodes nested within a list with aria-hidden
         collapsed = trees.find('ul[aria-hidden=true], ' +
                                'ol[aria-hidden=true]').closest('li');
-        collapsed = collapsed.find('[aria-expanded=true]').andSelf();
+        collapsed = collapsed.find('.' + expandedCls).andSelf();
         collapsed.attr(ariaExp, 'false');
         collapsed.removeClass(expandedCls).addClass(collapseCls);
         collapsed.find('ul, ol').attr(ariaHide, true).hide();
@@ -60,39 +80,44 @@
     }
     
     /**
-     * Toggle the visibility of the branch
-     */
-    function toggleBranch(branch) {
-        var subtree = branch.find('ul, ol').first();
-        if (branch.hasClass(expandedCls)) {
-            branch.attr(ariaExp, false);
-            branch.addClass(collapseCls).removeClass(expandedCls);
-            subtree.hide(200).attr(ariaHide, true);
-            
-        } else {
-            branch.attr(ariaExp, true);
-            branch.addClass(expandedCls).removeClass(collapseCls);
-            subtree.show(200).attr(ariaHide, false);
-        }
-    }
-    
-    /**
      * TreeVue jQuery plugin; accessible treeview
      */
     $.fn.treevue = function() {
-        var trees = $(this);
+        var trees = $(this),
+            first = trees.find('> :first-child');
         trees.addClass('treevue');
         trees.find('li').attr('tabindex', -1);
-        trees.find('> :first-child').attr('tabindex', 0).addClass(focusClass);
         
         
         // Add WAI-ARIA role and state
         addAriaTreeRoles(trees);
         addAriaSelectStates(trees);
+        
+        first.attr('tabindex', 0).addClass(focusClass)
+        first.prepend(treeFallback);
     };
     
     // When the document is loaded, attach event handlers for all vuetrees 
     $(function () {
+        /**
+         * Toggle the visibility of the branch
+         */
+        function toggleBranch(branch) {
+            var subtree = branch.find('ul, ol').first();
+            if (branch.hasClass(expandedCls)) {
+                branch.attr(ariaExp, false);
+                branch.addClass(collapseCls).removeClass(expandedCls);
+                subtree.hide(200).attr(ariaHide, true);
+                branch.find('.treevue_fallback_branch').text(textCollapsed);
+                
+            } else {
+                branch.attr(ariaExp, true);
+                branch.addClass(expandedCls).removeClass(collapseCls);
+                subtree.show(200).attr(ariaHide, false);
+                branch.find('.treevue_fallback_branch').text(textExpanded);
+            }
+        }
+        
         /**
          * Move the focus to an item in the tree.
          */
@@ -103,6 +128,8 @@
                         'tabindex', -1);
                 elm.focus().attr('tabindex', 0);
                 elm.addClass(focusClass);
+                // Move the tree fallback
+                tree.find('.treevue_fallback').detach().prependTo(elm);
             }
         }
     
