@@ -111,20 +111,23 @@
          * Toggle the visibility of the branch
          */
         function toggleBranch(branch) {
-            var subtree = branch.find('ul, ol');
+            var subtree = $();
+            branch.each(function () {
+                subtree = subtree.add($('ul, ol', this).first());
+            });
             
             if (branch.hasClass(expandedCls)) {
                 branch.attr(ariaExp, false);
                 branch.addClass(collapseCls).removeClass(expandedCls);
                 subtree.hide(200).attr(ariaHide, true);
-                branch.find('.treevue_fallback_branch button').
+                branch.find('.treevue_fallback_branch button').first().
                         text(textCollapsed);
                 
             } else {
                 branch.attr(ariaExp, true);
                 branch.addClass(expandedCls).removeClass(collapseCls);
                 subtree.show(200).attr(ariaHide, false);
-                branch.find('.treevue_fallback_branch button').
+                branch.find('.treevue_fallback_branch button').first().
                        text(textExpanded);
             }
         }
