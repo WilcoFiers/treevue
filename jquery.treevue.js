@@ -111,7 +111,7 @@
          * Toggle the visibility of the branch
          */
         function toggleBranch(branch) {
-            var subtree = branch.find('ul, ol').first();
+            var subtree = branch.find('ul, ol');
             
             if (branch.hasClass(expandedCls)) {
                 branch.attr(ariaExp, false);
@@ -125,7 +125,7 @@
                 branch.addClass(expandedCls).removeClass(collapseCls);
                 subtree.show(200).attr(ariaHide, false);
                 branch.find('.treevue_fallback_branch button').
-                        text(textExpanded);
+                       text(textExpanded);
             }
         }
         
@@ -232,7 +232,6 @@
                 } else { // next sibling
                     focusItem($this.next());
                 }
-                
             } else if (keyCode === 38) { // press UP
                 if ($this.prev().hasClass(expandedCls)) { // enter a branch
                     focusItem($this.prev().find('ul li, ol li').last());
@@ -241,26 +240,28 @@
                 } else { // prev sibling
                     focusItem($this.prev());
                 }
-                
             } else if (keyCode === 37) { // press LEFT
                 if (expanded) {
                     toggleBranch($this);
                 } else { // exit the current branch
                     focusItem($this.parent().closest('li'));
                 }
-                
             } else if (keyCode === 39) { // press RIGHT
                 if ($this.hasClass(collapseCls)) {
                     toggleBranch($this);
                 } else if (expanded) { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
                 }
-                
             } else if (keyCode === 36) { // press HOME
                 focusItem($this.closest('.treevue').find('li').first());
                 
             } else if (keyCode === 35) { // press END
                 focusItem($this.closest('.treevue').find('li').last());
+                
+            } else if (keyCode === 106) { // press keypad asterisk
+                toggleBranch($this.closest('.treevue').
+                             find('li.' + collapseCls));
+            
             } else { // no known keys activated, so nothing has to be prevented
                 return;
             }
