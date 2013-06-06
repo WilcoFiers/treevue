@@ -208,7 +208,7 @@
          * keyboard input
          */
         }).on('keydown', '.treevue li', function (event) {
-            var expanded, checkbox,
+            var expanded, checkbox, chr, next,
                 keyCode = event.keyCode,
                 $this = $(this);
             
@@ -263,10 +263,10 @@
                              find('li.' + collapseCls));
             
             } else if (keyCode >= 65 && keyCode <= 90) { // press letter key
-                var chr = String.fromCharCode(keyCode);
+                chr = String.fromCharCode(keyCode);
                 // take all children, all next siblings, and all the 
                 // next siblings of it's ancesters
-                var next = $this.parents('li', $this.closest('.treevue')).
+                next = $this.parents('li', $this.closest('.treevue')).
                         andSelf().nextAll().add($this.find('li')).
                         find('li').andSelf().
                         // Find the first node thst starts with the pressed char
