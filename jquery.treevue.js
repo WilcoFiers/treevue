@@ -101,7 +101,7 @@
         addAriaTreeRoles(trees);
         addAriaSelectStates(trees);
         
-        first.attr('tabindex', 0).addClass(focusClass)
+        first.attr('tabindex', 0).addClass(focusClass);
         first.prepend(treeFallback);
     };
     
@@ -255,7 +255,12 @@
                 } else if (expanded) { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
                 }
-            
+                
+            } else if (keyCode === 36) { // press HOME
+                focusItem($this.closest('.treevue').find('li').first());
+                
+            } else if (keyCode === 35) { // press END
+                focusItem($this.closest('.treevue').find('li').last());
             } else { // no known keys activated, so nothing has to be prevented
                 return;
             }
