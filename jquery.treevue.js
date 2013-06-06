@@ -262,6 +262,17 @@
                 toggleBranch($this.closest('.treevue').
                              find('li.' + collapseCls));
             
+            } else if (keyCode >= 65 && keyCode <= 90) { // press letter key
+                var chr = String.fromCharCode(keyCode);
+                var next = $this.parents('li', $this.closest('.treevue')).
+                        andSelf().nextAll().add($this.find('li')).
+                        find('li').andSelf().
+                        filter(function () {
+                            var text = $.trim($(this).text());
+                            return text[0].toUpperCase() === chr;
+                        }).first();
+                focusItem(next);
+            
             } else { // no known keys activated, so nothing has to be prevented
                 return;
             }
