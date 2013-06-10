@@ -93,8 +93,7 @@
      */
     $.fn.treevue = function() {
         var first = this.find('> :first-child');
-        this.addClass('treevue');
-        this.find('li').attr('tabindex', -1);
+        this.addClass('treevue').find('li').attr('tabindex', -1);
         
         // Add WAI-ARIA role and state
         addAriaTreeRoles(this);
