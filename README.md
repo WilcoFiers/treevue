@@ -63,6 +63,7 @@ Treevue has successfully been tested with:
 # Upcoming Features
 
 - Treevue should fire custom events
+- Options for animation speed and L10n
 - Additional style examples
 - Generate a tree from JSON
 - Export a tree to JSON
