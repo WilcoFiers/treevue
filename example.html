@@ -78,12 +78,7 @@
   <script src="jquery.treevue.js"></script>
   <script>
     jQuery(function ($) {
-        $('body > ul, body > ol').treevue().
-                on('change-selection', function (e) {
-                    console.log(e.values, e);
-                }).on('expand collapse', function (e) {
-                    console.log(e);
-                });
+        $('body > ul, body > ol').treevue();
     });
   </script>
 </body>
