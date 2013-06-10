@@ -153,6 +153,7 @@
         function checkboxChange(box) {
             var item = box.closest('[aria-selected]'),
                 checked = box.prop('checked'),
+                tree = node.closest('.treevue'),
                 node = box.closest('li');
             
             // update the selected state
