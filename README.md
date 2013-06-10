@@ -74,11 +74,10 @@ Treevue has successfully been tested with:
 
 # Upcoming Features
 
-- Treevue should fire custom events
-- Options for animation speed and L10n
-- Additional style examples
 - Generate a tree from JSON
 - Export a tree to JSON
+- Options for animation speed and L10n
+- Additional style examples
 - Disabled checkboxes
 - Persistence through local storage
 - Automatic collapse when a new branch is opened
