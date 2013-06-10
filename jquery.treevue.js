@@ -45,6 +45,27 @@
     branchFallback.css(fallbackCss).attr(fallbackAria);
     
     /**
+     * Return the value of the checkbox. If none is given the label is returned
+     */
+    function getCheckboxValue() {
+        var label, 
+            $this = $(this),
+            val = $(this).attr('value');
+        
+        if (!val) {
+            label = $('label[for=' + $this.context.id + ']');
+            if (label.length === 0) {
+                label = $this.closest('label');
+            }
+            if (label) {
+                val = $.trim(label.text());
+            }
+        }
+        return val;
+    }
+    
+    
+    /**
      * Add ARIA roles
      */
     function addAriaTreeRoles(trees) {
@@ -93,8 +114,7 @@
      */
     $.fn.treevue = function() {
         var first = this.find('> :first-child');
-        this.addClass('treevue');
-        this.find('li').attr('tabindex', -1);
+        this.addClass('treevue').find('li').attr('tabindex', -1);
         
         // Add WAI-ARIA role and state
         addAriaTreeRoles(this);
@@ -111,7 +131,9 @@
          * Toggle the visibility of the branch
          */
         function toggleBranch(branch) {
-            var subtree = $();
+            var event = {target: branch.context},
+                subtree = $();
+            
             branch.each(function () {
                 subtree = subtree.add($('ul, ol', this).first());
             });
@@ -121,14 +143,16 @@
                 branch.addClass(collapseCls).removeClass(expandedCls);
                 subtree.hide(200).attr(ariaHide, true);
                 branch.find('.treevue_fallback_branch button').first().
-                        text(textCollapsed);
+                        text(textCollapsed).
+                        trigger($.Event('collapse', event));
                 
             } else {
                 branch.attr(ariaExp, true);
                 branch.addClass(expandedCls).removeClass(collapseCls);
                 subtree.show(200).attr(ariaHide, false);
                 branch.find('.treevue_fallback_branch button').first().
-                       text(textExpanded);
+                       text(textExpanded).
+                       trigger($.Event('expand', event));
             }
         }
         
@@ -145,6 +169,7 @@
                 // Move the tree fallback
                 tree.find('.treevue_fallback').detach().prependTo(elm);
             }
+            
         }
     
         /**
@@ -165,7 +190,7 @@
             }
             
             // Locate any parent nodes
-            node.parents('.treevue li').each(function () {
+            node.parentsUntil(tree, 'li').each(function () {
                 var boxes,
                     $this = $(this),
                     checkbox = $(':checkbox', this).first();
@@ -186,6 +211,12 @@
                 }
             });
             
+            // Fire a new event
+            tree.trigger($.Event('change-selection', {
+                target: tree.context,
+                // Get all the values of selected items
+                values: tree.find(':checked').map(getCheckboxValue).get()
+            }));
         }
     
         /**

@@ -54,6 +54,18 @@ Example:
         </ul></li>
     </ul>
 
+# Events
+
+Treevue triggers serveral custom events. The `expand` and `collapse` events are 
+triggered whenever a branch is expanded or collapsed. The `change-selection` 
+event will trigger when a node is checked or unchecked, giving an array of selected values on the `event.values` property. If the checkbox doesn't have a value set, the label for that checkbox is used as it's value.
+
+    $('#tree').on('expand collapse', function (event) {
+        // Do something with the event
+    }).on('change-selection', function (event) {
+        // event.values <-- all the selected values
+    });
+
 # Accessibility
 
 Treevue has successfully been tested with:
