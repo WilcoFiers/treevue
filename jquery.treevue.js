@@ -92,17 +92,17 @@
      * TreeVue jQuery plugin; accessible treeview
      */
     $.fn.treevue = function() {
-        var trees = $(this),
-            first = trees.find('> :first-child');
-        trees.addClass('treevue');
-        trees.find('li').attr('tabindex', -1);
+        var first = this.find('> :first-child');
+        this.addClass('treevue');
+        this.find('li').attr('tabindex', -1);
         
         // Add WAI-ARIA role and state
-        addAriaTreeRoles(trees);
-        addAriaSelectStates(trees);
+        addAriaTreeRoles(this);
+        addAriaSelectStates(this);
         
         first.attr('tabindex', 0).addClass(focusClass);
         first.prepend(treeFallback);
+        return this;
     };
     
     // When the document is loaded, attach event handlers for all vuetrees 
@@ -153,7 +153,7 @@
         function checkboxChange(box) {
             var item = box.closest('[aria-selected]'),
                 checked = box.prop('checked'),
-                tree = node.closest('.treevue'),
+                tree = box.closest('.treevue'),
                 node = box.closest('li');
             
             // update the selected state
