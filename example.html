@@ -80,6 +80,8 @@
         $('body > ul, body > ol').treevue().
                 on('select-change', function (e) {
                     console.log(e);
+                }).on('expand collapse', function (e) {
+                    console.log(e);
                 });
     });
   </script>

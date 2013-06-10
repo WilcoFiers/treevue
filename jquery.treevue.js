@@ -110,7 +110,9 @@
          * Toggle the visibility of the branch
          */
         function toggleBranch(branch) {
-            var subtree = $();
+            var event = {target: branch.context},
+                subtree = $();
+            
             branch.each(function () {
                 subtree = subtree.add($('ul, ol', this).first());
             });
@@ -120,14 +122,16 @@
                 branch.addClass(collapseCls).removeClass(expandedCls);
                 subtree.hide(200).attr(ariaHide, true);
                 branch.find('.treevue_fallback_branch button').first().
-                        text(textCollapsed);
+                        text(textCollapsed).
+                        trigger($.Event('collapse', event));
                 
             } else {
                 branch.attr(ariaExp, true);
                 branch.addClass(expandedCls).removeClass(collapseCls);
                 subtree.show(200).attr(ariaHide, false);
                 branch.find('.treevue_fallback_branch button').first().
-                       text(textExpanded);
+                       text(textExpanded).
+                       trigger($.Event('expand', event));
             }
         }
         
@@ -144,6 +148,7 @@
                 // Move the tree fallback
                 tree.find('.treevue_fallback').detach().prependTo(elm);
             }
+            
         }
     
         /**
@@ -185,7 +190,7 @@
                 }
             });
             
-            tree.trigger('select-change', tree.find(':checked'));
+            //tree.trigger('select-change', tree.find(':checked'));
         }
     
         /**
