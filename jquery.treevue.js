@@ -45,6 +45,27 @@
     branchFallback.css(fallbackCss).attr(fallbackAria);
     
     /**
+     * Return the value of the checkbox. If none is given the label is returned
+     */
+    function getCheckboxValue() {
+        var label, 
+            $this = $(this),
+            val = $(this).attr('value');
+        
+        if (!val) {
+            label = $('label[for=' + $this.context.id + ']');
+            if (label.length === 0) {
+                label = $this.closest('label');
+            }
+            if (label) {
+                val = $.trim(label.text());
+            }
+        }
+        return val;
+    }
+    
+    
+    /**
      * Add ARIA roles
      */
     function addAriaTreeRoles(trees) {
@@ -190,7 +211,12 @@
                 }
             });
             
-            //tree.trigger('select-change', tree.find(':checked'));
+            // Fire a new event
+            tree.trigger($.Event('change-selection', {
+                target: tree.context,
+                // Get all the values of selected items
+                values: tree.find(':checked').map(getCheckboxValue).get()
+            }));
         }
     
         /**

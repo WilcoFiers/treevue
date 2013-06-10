@@ -21,13 +21,14 @@
 
 <h4>Assistive Technology</h4>
 <ul>
-  <li><div><input type="checkbox" id="jaws" data-type="subselector" />
-      <label for="jaws">Jaws (subselecting)</label><div><ul>
-      <li><div><input type="checkbox" id="jaws119" />
+  <li><div><label>
+      <input type="checkbox" id="jaws" data-type="subselector" />
+      Jaws (subselecting)</label><div><ul>
+      <li><div><input type="checkbox" id="jaws119" value="j119" />
           <label for="jaws119">Jaws 11.9</label></div></li>
-      <li><div><input type="checkbox" id="jaws1212" />
+      <li><div><input type="checkbox" id="jaws1212" value="j1212" />
           <label for="jaws1212">Jaws 12.1.2</label></div></li>
-      <li><div><input type="checkbox" id="jaws137" />
+      <li><div><input type="checkbox" id="jaws137" value="j137" />
           <label for="jaws137">Jaws 13.7 beta</label></div></li>
   </ul></div></div></li>
   <li><div><input type="checkbox" id="nvda" />
@@ -78,8 +79,8 @@
   <script>
     jQuery(function ($) {
         $('body > ul, body > ol').treevue().
-                on('select-change', function (e) {
-                    console.log(e);
+                on('change-selection', function (e) {
+                    console.log(e.values, e);
                 }).on('expand collapse', function (e) {
                     console.log(e);
                 });
