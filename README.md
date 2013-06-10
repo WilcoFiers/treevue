@@ -54,6 +54,14 @@ Example:
         </ul></li>
     </ul>
 
+# Events
+
+Treevue triggers serveral custom events. The `expand` and `collapse` events are triggered whenever a branch is expanded or collapsed.
+
+    $('#tree').on('expand collapse', function (event) {
+        // Do something with the event
+    });
+
 # Accessibility
 
 Treevue has successfully been tested with:
