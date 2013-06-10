@@ -60,6 +60,16 @@ Treevue has successfully been tested with:
 - NVDA 2013.1 on Firefox
 - NVDA 2010.1 on Firefox
 
+# Upcoming Features
+
+- Treevue should fire custom events
+- Additional style examples
+- Generate a tree from JSON
+- Export a tree to JSON
+- Disabled checkboxes
+- Persistence through local storage
+- Automatic collapse when a new branch is opened
+
 # Development
 jQuery treevue was created as part of the Accessibility Supported database 
 project by the W3C.
