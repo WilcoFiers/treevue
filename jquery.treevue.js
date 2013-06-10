@@ -153,7 +153,7 @@
         function checkboxChange(box) {
             var item = box.closest('[aria-selected]'),
                 checked = box.prop('checked'),
-                tree = node.closest('.treevue'),
+                tree = box.closest('.treevue'),
                 node = box.closest('li');
             
             // update the selected state
@@ -165,7 +165,7 @@
             }
             
             // Locate any parent nodes
-            node.parents('.treevue li').each(function () {
+            node.parentsUntil(tree, 'li').each(function () {
                 var boxes,
                     $this = $(this),
                     checkbox = $(':checkbox', this).first();
@@ -186,6 +186,7 @@
                 }
             });
             
+            tree.trigger('select-change', tree.find(':checked'));
         }
     
         /**

@@ -77,7 +77,10 @@
   <script src="jquery.treevue.js"></script>
   <script>
     jQuery(function ($) {
-        $('body > ul, body > ol').treevue();
+        $('body > ul, body > ol').treevue().
+                on('select-change', function (e) {
+                    console.log(e);
+                });
     });
   </script>
 </body>
