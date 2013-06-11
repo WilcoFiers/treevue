@@ -18,6 +18,7 @@
       </ol></li>
   </ol></li>
 </ol>
+<button>log</button>
 
 <h4>Assistive Technology</h4>
 <ul>
@@ -41,6 +42,7 @@
           <label for="nvda137"> NVDA 13.7 beta</label></div></li>
   </ul></div></div></li>
 </ul>
+<button>log</button>
 
 <h4>Web Browser</h4>
 <ul>
@@ -55,6 +57,7 @@
       <li>Firefox 13.7 beta</li>
   </ul></li>
 </ul>
+<button>log</button>
 
 <h4>Web Technology</h4>
 <ul>
@@ -62,6 +65,7 @@
   <li>CSS Techniques </li>
   <li>ARIA Techniques</li>
 </ul>
+<button>log</button>
 
 <h4>Operating System</h4>
 <ul>
@@ -73,13 +77,19 @@
       <li>Ubuntu x86 12</li>
   </ul></li>
 </ul>
+<button>log</button>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script src="jquery.treevue.js"></script>
   <script src="jquery.treevue.import.js"></script>
+  <script src="jquery.treevue.export.js"></script>
   <script>
     jQuery(function ($) {
         $('body > ul, body > ol').treevue();
+        
+        $('button').click(function () {
+            console.log($(this).prevUntil('.treevue').treevueJson());
+        });
     });
   </script>
 </body>
