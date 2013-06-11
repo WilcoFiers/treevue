@@ -81,6 +81,8 @@ You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This fu
             'disabled'   : true,
             // Is the item a subselector, default: false            
             'subselector': true,
+            // Is the item collapsed, default: false
+            'collapsed': true
     }]).appendTo('body'); // Add the node to the body of the page
 
 # Accessibility

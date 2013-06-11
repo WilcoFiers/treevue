@@ -57,6 +57,7 @@
      *   selected: bool         Is the item selected
      *   disabled: bool         Is the item disabled
      *   subselector: bool      Is the item a subselector
+     *   collapsed: bool        Is the item collapsed by default
      *   children: array        An array containing child nodes
      *
      * @param   Array   An array containing node objects for treevue
