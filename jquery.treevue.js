@@ -13,12 +13,14 @@
         ariaExp       = 'aria-expanded',
         ariaSel       = 'aria-selected',
         ariaHide      = 'aria-hidden',
+        ariaDisable   = 'aria-disabled',
         role          = 'role',
         // className values
         focusClass    = 'treevue-focus',
         expandedCls   = 'treevue-expanded',
         collapseCls   = 'treevue-collapsed',
         selectedCls   = 'treevue-selected',
+        disableCls    = 'treevue-disabled',
         // Text for l10n
         textExpanded  = 'Collapse node',
         textCollapsed = 'Expand node',
@@ -89,6 +91,9 @@
         collapsed.attr(ariaExp, 'false');
         collapsed.removeClass(expandedCls).addClass(collapseCls);
         collapsed.find('ul, ol').attr(ariaHide, true).hide();
+        
+        trees.find(':disabled').closest('li').addClass(disableCls).
+                attr(ariaDisable, true);
     }
     
     
@@ -186,7 +191,8 @@
             
             // select / unselect all children when the node is a subselector
             if (box.attr('data-type') === 'subselector') {
-                node.find('ul :checkbox, ol :checkbox').prop('checked', checked);
+                node.find('ul :checkbox, ol :checkbox').
+                        not(':disabled').prop('checked', checked);
             }
             
             // Locate any parent nodes
@@ -200,7 +206,8 @@
                         checkbox.attr('data-type') === 'subselector') {
                     
                     // All boxes are checked to check the subselector
-                    boxes = $this.find('ul :checkbox, ol :checkbox');
+                    boxes = $this.find('ul :checkbox, ol :checkbox').
+                                    not(':disabled');
                     if (boxes.length === boxes.filter(':checked').length) {
                         checkbox.prop('checked', true);
                         
@@ -256,8 +263,10 @@
             if (keyCode === 13 && $this.attr(ariaSel) !== undefined) {
                 //locate the checkbox and invert it and the select value
                 checkbox = $this.find(':checkbox').first();
-                checkbox.prop('checked', !checkbox.prop('checked'));
-                checkboxChange(checkbox);
+                if (checkbox.is(':not(:disabled')) {
+                    checkbox.prop('checked', !checkbox.prop('checked'));
+                    checkboxChange(checkbox);
+                }
                 
             } else if (keyCode === 40) { // press DOWN
                 if (expanded) { // enter a branch
