@@ -1,0 +1,24 @@
+{
+  "name": "treevue",
+  "version": "0.1.0",
+  "description": "A jQuery treeview plugin",
+  "main": "jquery.treevue.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WilcoFiers/treevue.git"
+  },
+  "keywords": [
+    "jQuery",
+    "treeview",
+    "accessibility",
+    "wai-aria",
+    "aria"
+  ],
+  "author": "Wilco Fiers",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "e9d36053c33b3a82123f5f3cb4f7117ebb8ea826",
+  "bugs": {
+    "url": "https://github.com/WilcoFiers/treevue/issues"
+  }
+}
