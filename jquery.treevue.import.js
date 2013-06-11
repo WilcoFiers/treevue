@@ -21,6 +21,7 @@
             box = $('<input type="checkbox" />').appendTo(liNode).
                     prop('checked', data.selected).
                     prop('disabled', data.disabled).
+                    attr('value', data.value).
                     attr('id', boxId);
             
             if (data.subselector) {
@@ -50,11 +51,12 @@
      * 
      * The json contains an array with objects, where each object represetns
      * a node in the tree. The following properties are allowed for each node
+     *   label: string          The text label for the tree
+     *   value: mixed           The value set for the checkbox
+     *   id: string             The id for the item (the checkbox)
      *   selected: bool         Is the item selected
      *   disabled: bool         Is the item disabled
      *   subselector: bool      Is the item a subselector
-     *   id: string             The id for the item (the checkbox)
-     *   label: string          The text label for the tree
      *   children: array        An array containing child nodes
      *
      * @param   Array   An array containing node objects for treevue
