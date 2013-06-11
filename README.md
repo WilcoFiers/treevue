@@ -74,13 +74,13 @@ Treevue has successfully been tested with:
 
 # Upcoming Features
 
+- Disabled checkboxes
 - Generate a tree from JSON
 - Export a tree to JSON
-- Options for animation speed and L10n
-- Additional style examples
-- Disabled checkboxes
 - Persistence through local storage
+- Additional style examples
 - Automatic collapse when a new branch is opened
+- Options for animation speed and L10n
 
 # Development
 jQuery treevue was created as part of the Accessibility Supported database 
