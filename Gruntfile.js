@@ -9,7 +9,7 @@ module.exports = function(grunt) {
                         '<%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: 'jquery.treevue.js',
+                src: ['jquery.treevue.js', 'jquery.treevue.import.js'],
                 dest: 'jquery.treevue.min.js'
             }
         }
