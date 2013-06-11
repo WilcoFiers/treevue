@@ -65,6 +65,23 @@ event will trigger when a node is checked or unchecked, giving an array of selec
     }).on('change-selection', function (event) {
         // event.values <-- all the selected values
     });
+    
+# Treevue and JSON
+
+You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This function takes an array containing one or more nodes that will be put into the tree. The function then will return a jquery selection containing the initialized tree:
+
+    jQuery.treevue([{
+            'label'      : '', // Label of the tree item
+            'id'         : '', // Optional; ID attribute given to the checkbox
+            'children'   : [], // Optional; an array with children
+            'value'      : '', // Optional; value of the checkbox
+            // Is the item initially selected (checked), default: false
+            'selected'   : true,
+            // Is the item disabled, default: false
+            'disabled'   : true,
+            // Is the item a subselector, default: false            
+            'subselector': true,
+    }]).appendTo('body'); // Add the node to the body of the page
 
 # Accessibility
 
@@ -74,7 +91,6 @@ Treevue has successfully been tested with:
 
 # Upcoming Features
 
-- Generate a tree from JSON
 - Export a tree to JSON
 - Persistence through local storage
 - Additional style examples
