@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Treevue example page 2</title>
+  <link rel="stylesheet" href="tree.css">
+</head>
+<body>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="jquery.treevue.js"></script>
+  <script src="jquery.treevue.import.js"></script>
+  <script>
+    jQuery(function ($) {
+        $.treevue([{
+            "label": "Node A", "selected": false, "disabled": true
+        }, {
+            "id": "tree-node-b",
+            "label": "Node B", "value": "node-b",
+            "subselector": true, "collapsed": true,
+            "children" : [{
+                "label": "Node B1", "selected": true
+            }, {
+                "label": "Node B2", "selected": false
+            }, {
+                "label": "Node B3"
+            }]
+        }, {
+            "label": "Node C",
+            "subselector": true, "collapsed": true,
+            "children": [{
+                "label": "Node C1", "selected": false
+            }, {
+                "label": "Node C2", "selected": false
+            }, {
+                "label": "Node C3"
+            }]
+        }]).appendTo('body');
+    });
+  </script>
+</body>
+</html>
