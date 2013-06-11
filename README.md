@@ -33,7 +33,7 @@ checkboxes to the list item elements. To ensure inheritance in selection the
 subselector property is available by adding `data-type="subselector"` to the 
 checkbox. Checking/unchecking a subselector will check/uncheck it's 
 descendends. Subselectors become unchecked when any of it's children is 
-unchecked.
+unchecked. When checkboxes are disabled they are ignored by the subselector.
 
 Example:
 
@@ -74,7 +74,6 @@ Treevue has successfully been tested with:
 
 # Upcoming Features
 
-- Disabled checkboxes
 - Generate a tree from JSON
 - Export a tree to JSON
 - Persistence through local storage
