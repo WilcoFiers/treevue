@@ -27,7 +27,6 @@ Javascript:
     $('#myTree').treevue();
 
 # Checkboxes
-
 To make a tree view where from which items can be selected, simply include 
 checkboxes to the list item elements. To ensure inheritance in selection the 
 subselector property is available by adding `data-type="subselector"` to the 
@@ -55,7 +54,6 @@ Example:
     </ul>
 
 # Events
-
 Treevue triggers serveral custom events. The `expand` and `collapse` events are 
 triggered whenever a branch is expanded or collapsed. The `change-selection` 
 event will trigger when a node is checked or unchecked, giving an array of selected values on the `event.values` property. If the checkbox doesn't have a value set, the label for that checkbox is used as it's value.
@@ -67,7 +65,6 @@ event will trigger when a node is checked or unchecked, giving an array of selec
     });
     
 # Treevue and JSON
-
 You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This function takes an array containing one or more nodes that will be put into the tree. The function then will return a jquery selection containing the initialized tree:
 
     jQuery.treevue([{
@@ -88,15 +85,13 @@ You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This fu
 Alternatively, the `.treevueJson()` plugin that comes with Treevue can read a tree and convert it to a json object following the above structure. The `.treevueJson()` will look at the first tree in the selection and return it's structure, like so:
 
     $('#myTree').treevueJson();
-    
-# Accessibility
 
+# Accessibility
 Treevue has successfully been tested with:
 - NVDA 2013.1 on Firefox
 - NVDA 2010.1 on Firefox
 
 # Upcoming Features
-
 - Additional style examples
 - Persistence through local storage
 - Add a way to pass a type to different nodes
@@ -106,6 +101,7 @@ Treevue has successfully been tested with:
 # Development
 jQuery treevue was created as part of the Accessibility Supported database 
 project by the W3C.
+
 
 # License
 Copyright (c) 2013 Accessibility Foundation Licensed under the New BSD license.
