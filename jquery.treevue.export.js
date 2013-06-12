@@ -14,17 +14,28 @@
         
         if (children.length > 0) {
             obj.children  = $.map(children, treenodeToJson);
-            obj.collapsed = node.hasClass(collapseCls);
+            if (node.hasClass(collapseCls)) {
+                obj.collapsed = true;
+            }
         }
         
         // Check if it has a checkbox
         if (checkbox.closest('li').is(node)) {
-            //obj.id          = checkbox.attr('id');
-            obj.disabled    = node.hasClass(disableCls);
-            obj.value       = checkbox.attr('value');
-            obj.selected    = checkbox.prop('checked');
-            obj.subselector = (checkbox.attr('data-type') === 'subselector');
-            obj.label       = $.trim(node.find('label:first()').text());
+            if (/treevue-node-/.test(checkbox.attr('id')) === false) {
+                obj.id = checkbox.attr('id');
+            }
+            obj.selected = checkbox.prop('checked');
+            
+            $.each({ // set optional properties only if truthy
+                disabled: node.hasClass(disableCls),
+                value: checkbox.attr('value'),
+                subselector: (checkbox.attr('data-type') === 'subselector'),
+                label: $.trim(node.find('label:first()').text())
+            }, function (key, value) {
+                if (value) {
+                    obj[key] = value;
+                }
+            });
             
         } else { // Label when there is no checkbox
             obj.label = $.trim(node.clone().
