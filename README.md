@@ -85,6 +85,10 @@ You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This fu
             'collapsed': true
     }]).appendTo('body'); // Add the node to the body of the page
 
+Alternatively, the `.treevueJson()` plugin that comes with Treevue can read a tree and convert it to a json object following the above structure. The `.treevueJson()` will look at the first tree in the selection and return it's structure, like so:
+
+    $('#myTree').treevueJson();
+    
 # Accessibility
 
 Treevue has successfully been tested with:
@@ -93,9 +97,9 @@ Treevue has successfully been tested with:
 
 # Upcoming Features
 
-- Export a tree to JSON
-- Persistence through local storage
 - Additional style examples
+- Persistence through local storage
+- Add a way to pass a type to different nodes
 - Automatic collapse when a new branch is opened
 - Options for animation speed and L10n
 
