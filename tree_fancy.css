@@ -1,0 +1,47 @@
+.treevue li {
+    list-style:none;
+    /* Create a little space to the left for the open/close images */
+}
+.treevue ul, .treevue ol {
+    padding: 0 0 0 1.25em;
+    margin:0;
+}
+.treevue li:before  {
+    content:"";
+    z-index:-1;
+    height:0;
+    border-top:1.25em solid #EEE;
+    position:absolute;
+    margin-left:-1.25em;
+}
+.treevue li.treevue-expanded:before,
+.treevue li.treevue-collapsed:before {
+    border-top:1.25em solid #EEE;
+    border-bottom:1.25em solid transparent;
+    border-left:1.25em solid transparent;
+}
+.treevue li.treevue-collapsed:before  {
+    border-top-color: transparent !important;
+    border-bottom-color: #EEE !important;
+    margin-top:-1.25em;
+}
+.treevue label:hover {
+    background:rgba(0,0,0, 0.05);
+}
+
+.treevue .treevue-focus {
+}
+
+.treevue [aria-selected=true]:hover {
+    border-color:green !important;
+}
+
+.treevue input[type=checkbox] {
+    position:absolute;
+    top:-999em;
+}
+
+.treevue [aria-disabled=true] {
+    color:grey;
+    
+}
