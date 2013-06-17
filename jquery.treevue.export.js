@@ -5,13 +5,17 @@
         disableCls    = 'treevue-disabled';
     
     function treenodeToJson(node) {
-        var children, checkbox,
-            obj = {};
+        var children, checkbox, type,
+            obj  = {};
         
         node     = $(node);
         checkbox = node.find(':checkbox:first()');
         children = node.find('ul:first() > li, ol:first() > li');
+        type     = node.attr('data-treevue-type');
         
+        if (type) {
+            obj.type = type;
+        }
         if (children.length > 0) {
             obj.children  = $.map(children, treenodeToJson);
             if (node.hasClass(collapseCls)) {

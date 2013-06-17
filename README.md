@@ -26,6 +26,9 @@ Javascript:
 
     $('#myTree').treevue();
 
+You can add a type to nodes by setting the `data-treevue-type` attribute on the 
+list item. This attribute can be used to hook other functionality into a treevue.
+    
 # Checkboxes
 To make a tree view where from which items can be selected, simply include 
 checkboxes to the list item elements. To ensure inheritance in selection the 
