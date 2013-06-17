@@ -1,7 +1,8 @@
 (function ($) {
     'use strict';
-    // A number used to give each checkbox a unique ID
-    var nodeNum = 0;
+    
+    var namespace,
+        nodeNum = 0; // A number used to give each checkbox a unique ID
     
     /**
      * Create a new li node for in a treevue
@@ -10,13 +11,15 @@
      * @return  Node    A jquery object containing the new li node
      */
     function createTreeNode(data) {
-        var box, boxId, ulNode,
-            liNode = $('<li></li>');
+        var box, boxId, ulNode, liNode;
+        
+        liNode = $('<li></li>').
+                attr('data-treevue-type', data.type);
         
         // Add a checkbox and label:
         if (data.selected || data.disabled || data.subselector) {
             // Give each node a unique ID
-            boxId = data.id || "treevue-node-" + (nodeNum += 1);
+            boxId = namespace + (data.id || "treevue-node-" + (nodeNum += 1));
             
             box = $('<input type="checkbox" />').appendTo(liNode).
                     prop('checked', data.selected).
@@ -63,7 +66,8 @@
      * @param   Array   An array containing node objects for treevue
      * @return  Node    A treevue ul element
      */
-    $.treevue = function (json) {
+    $.treevue = function (json, ns) {
+        namespace = (ns ? ns + '-' : '');
         return $('<ul />').
                 append($.map(json, createTreeNode)).
                 treevue();
