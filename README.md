@@ -103,7 +103,6 @@ Treevue has successfully been tested with:
 - Additional style examples
 - Persistence through local storage
 - Create a property for ordered lists in the JSON objects
-- Add a way to pass a type to different nodes
 - Automatic collapse when a new branch is opened
 - Options for animation speed and L10n
 
