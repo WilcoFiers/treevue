@@ -11,10 +11,12 @@
      * @return  Node    A jquery object containing the new li node
      */
     function createTreeNode(data) {
-        var box, boxId, ulNode, liNode;
+        var box, boxId, ulNode,
+            liNode = $('<li></li>');
         
-        liNode = $('<li></li>').
-                attr('data-treevue-type', data.type);
+        if (data.type) {
+            liNode.attr('data-treevue-type', data.type);
+        }
         
         // Add a checkbox and label:
         if (data.selected || data.disabled || data.subselector) {

@@ -68,7 +68,7 @@ it's value.
     });
     
 # Treevue and JSON
-You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This function takes an array containing one or more nodes that will be put into the tree. The function then will return a jquery selection containing the initialized tree:
+You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This function takes an array containing one or more nodes that will be put into the tree. The function then will return a jquery selection containing the initialized tree. As a second parameter, you can add a namespace, which will be prepended to the id's used for the checkboxes. This might be useful when you include the same tree on a page multiple times.
 
     jQuery.treevue([{
             'label'      : '', // Label of the tree item
@@ -82,8 +82,10 @@ You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This fu
             // Is the item a subselector, default: false            
             'subselector': true,
             // Is the item collapsed, default: false
-            'collapsed': true
-    }]).appendTo('body'); // Add the node to the body of the page
+            'collapsed': true,
+            // This value will be added to a data-treevue-type attribute on li
+            'type': ''
+    }], 'myNamespace').appendTo('body'); // Add the node to the body of the page
 
 Alternatively, the `.treevueJson()` plugin that comes with Treevue can read a tree and convert it to a json object following the above structure. The `.treevueJson()` will look at the first tree in the selection and return it's structure, like so:
 
