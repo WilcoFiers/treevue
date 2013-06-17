@@ -22,6 +22,7 @@
     "url": "https://github.com/WilcoFiers/treevue/issues"
   },
   "devDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0"
   }
 }

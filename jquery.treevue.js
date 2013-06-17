@@ -32,6 +32,7 @@
             'overflow': 'hidden'
         },
         fallbackAria = {};
+    
     fallbackAria[role] = 'document';
     fallbackAria[ariaHide] = true;
     
@@ -51,15 +52,15 @@
     /**
      * Return the value of the checkbox. If none is given the label is returned
      */
-    function getCheckboxValue() {
+    function getCheckboxValue(i, node) {
         var label, 
-            $this = $(this),
-            val = $this.attr('value');
+            box = $(node),
+            val = box.attr('value');
         
         if (!val) {
-            label = $('label[for=' + $this.context.id + ']');
+            label = $('label[for=' + box.context.id + ']');
             if (label.length === 0) {
-                label = $this.closest('label');
+                label = box.closest('label');
             }
             if (label) {
                 val = $.trim(label.text());
@@ -109,7 +110,7 @@
             
             if ($this.is('[data-type="subselector"]')) {
                 boxes = $this.closest('li').find(':checkbox:not(:first())');
-                if (boxes.length != 0) {
+                if (boxes.length !== 0) {
                     $this.prop('checked', 
                             boxes.length === boxes.filter(':checked').length);
                 }
@@ -154,7 +155,7 @@
                         find('.treevue_fallback_branch button').first().
                         text(textCollapsed);
                 
-                branch.trigger($.Event('collapse', eventProps));
+                branch.trigger($.Event('treevue:collapse', eventProps));
                 
             } else {
                 subtree.show(200).attr(ariaHide, false);
@@ -163,7 +164,7 @@
                         find('.treevue_fallback_branch button').first().
                         text(textExpanded);
                 
-                branch.trigger($.Event('expand', eventProps));
+                branch.trigger($.Event('treevue:expand', eventProps));
             }
         }
         
@@ -226,7 +227,7 @@
             });
             
             // Fire a new event
-            tree.trigger($.Event('change-selection', {
+            tree.trigger($.Event('treevue:change', {
                 target: tree.context,
                 // Get all the values of selected items
                 values: tree.find(':checked').map(getCheckboxValue).get()

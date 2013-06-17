@@ -16,13 +16,25 @@ module.exports = function(grunt) {
                 ],
                 dest: 'jquery.treevue.min.js'
             }
+        },
+        jshint: {
+            all: ['jquery.treevue.js',
+                'jquery.treevue.import.js', 
+                'jquery.treevue.export.js'],
+            options: {
+                'globals' : {
+                    'jQuery' : true
+                }
+            }
         }
     });
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default task.
-    grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('default', ['jshint', 'uglify']);
 
 };
