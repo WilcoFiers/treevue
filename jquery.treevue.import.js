@@ -39,7 +39,7 @@
             liNode.text(data.label);
         }
         
-        if (data.children) {
+        if ($.isArray(data.children) && data.children.length > 0) {
             // Create a ul element with it's children
             ulNode = $('<ul/>').appendTo(liNode).
                     append($.map(data.children, createTreeNode));
