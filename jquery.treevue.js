@@ -149,21 +149,21 @@
             });
             
             if (branch.hasClass(expandedCls)) {
-                subtree.hide(200).attr(ariaHide, true);
                 branch.addClass(collapseCls).removeClass(expandedCls).
                         attr(ariaExp, false).
                         find('.treevue_fallback_branch button').first().
                         text(textCollapsed);
                 
+                subtree.hide(200).attr(ariaHide, true);
                 branch.trigger($.Event('treevue:collapse', eventProps));
                 
             } else {
-                subtree.show(200).attr(ariaHide, false);
                 branch.addClass(expandedCls).removeClass(collapseCls).
                         attr(ariaExp, true).
                         find('.treevue_fallback_branch button').first().
                         text(textExpanded);
                 
+                subtree.show(200).attr(ariaHide, false);
                 branch.trigger($.Event('treevue:expand', eventProps));
             }
         }
