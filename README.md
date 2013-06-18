@@ -84,6 +84,8 @@ You can build a treevue from a JSON by passing it to `jQuery.treevue()`. This fu
             'disabled'   : true,
             // Is the item a subselector, default: false            
             'subselector': true,
+            // This property let's you override if a checkbox should be placed
+            'selectable' : undefined,
             // Is the item collapsed, default: false
             'collapsed': true,
             // This value will be added to a data-treevue-type attribute on li

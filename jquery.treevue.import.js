@@ -19,7 +19,8 @@
         }
         
         // Add a checkbox and label:
-        if (data.selected || data.disabled || data.subselector) {
+        if (data.selectable === true || (data.selectable !== false && 
+                (data.selected || data.disabled || data.subselector))) {
             // Give each node a unique ID
             boxId = namespace + (data.id || "treevue-node-" + (nodeNum += 1));
             
