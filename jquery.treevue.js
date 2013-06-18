@@ -271,7 +271,7 @@
             if (keyCode === 13 && $this.attr(ariaSel) !== undefined) {
                 //locate the checkbox and invert it and the select value
                 checkbox = $this.find(':checkbox').first();
-                if (checkbox.is(':not(:disabled')) {
+                if (checkbox.is(':not(:disabled)')) {
                     checkbox.prop('checked', !checkbox.prop('checked'));
                     checkboxChange(checkbox);
                 }
