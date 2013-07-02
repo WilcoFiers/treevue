@@ -54,8 +54,9 @@
      */
     function getCheckboxValue(i, node) {
         var label, 
-            box = $(node),
-            val = box.attr('value');
+            box    = $(node),
+            val    = box.attr('value'),
+            type   = box.closest('.treevue li').attr("data-treevue-type");
         
         if (!val) {
             label = $('label[for=' + box.context.id + ']');
@@ -66,7 +67,12 @@
                 val = $.trim(label.text());
             }
         }
-        return val;
+        
+        return {
+            type: type,
+            value: val,
+            id: box.prop('id')
+        };
     }
     
     
