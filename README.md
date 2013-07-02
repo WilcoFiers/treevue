@@ -67,7 +67,14 @@ it's value.
     $('#tree').on('treevue:expand treevue:collapse', function (event) {
         // Do something with the event
     }).on('treevue:change', function (event) {
-        // event.values <-- all the selected values
+        /*
+        event.values now contains an array with objects for each of the selected nodes:
+        {
+            value: The value of the checkbox or alternatively the text of the label
+            id: The id of the checkbox
+            type: The type of this node
+        }
+        */
     });
     
 # Treevue and JSON
