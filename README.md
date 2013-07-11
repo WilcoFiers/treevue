@@ -121,4 +121,8 @@ project by the W3C.
 
 
 # License
-Copyright (c) 2013 Accessibility Foundation Licensed under the New BSD license.
+Copyright © WAI-ACT Consortium 2011-2013:
+
+* World Wide Web Consortium (W3C) <www.w3.org>
+* Accessibility Foundation <www.accessibility.nl>
+* Fraunhofer Institute for Applied Information Technology FIT <www.fit.fraunhofer.de>
