@@ -286,7 +286,8 @@
                 if (expanded) { // enter a branch
                     focusItem($this.find('ul li, ol li').first());
                 } else if ($this.next().length === 0) { // exit a branch
-                    focusItem($this.parent().closest('li').next());
+                    focusItem($this.parentsUntil('.treevue', 'li').
+                                    next().first());
                 } else { // next sibling
                     focusItem($this.next());
                 }
@@ -311,10 +312,10 @@
                     focusItem($this.find('ul li, ol li').first());
                 }
             } else if (keyCode === 36) { // press HOME
-                focusItem($this.closest('.treevue').find('li').first());
+                focusItem($this.closest('.treevue').find('li:visible').first());
                 
             } else if (keyCode === 35) { // press END
-                focusItem($this.closest('.treevue').find('li').last());
+                focusItem($this.closest('.treevue').find('li:visible').last());
                 
             } else if (keyCode === 106) { // press keypad asterisk
                 toggleBranch($this.closest('.treevue').
