@@ -243,8 +243,9 @@
         /**
          * pointer input
          */
-        $('body').on('click', '.treevue li.' + expandedCls +
+        $('body').on('click touchstart', '.treevue li.' + expandedCls +
                               ', .treevue li.' + collapseCls, function (event) {
+            event.stopPropagation(); event.preventDefault();
             if (event.target === this) {
                 var $this = $(this);
                 event.preventDefault();
