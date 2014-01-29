@@ -1,3 +1,6 @@
+.treevue ul, .treevue ol {
+    cursor: auto;
+}
 .treevue li {
     list-style:none;
     /* Create a little space to the left for the open/close images */
@@ -6,9 +9,11 @@
 }
 .treevue li.treevue-expanded {
     background: url(opened.png) no-repeat 0 .15em;
+    cursor: pointer;
 }
 .treevue li.treevue-collapsed {
     background: url(closed.png) no-repeat 0 .15em;
+    cursor: pointer;
 }
 .treevue label:hover {
     background:rgba(0,0,0, 0.05);

@@ -9,10 +9,12 @@
 .treevue li.treevue-expanded {
     background: url(opened.png) no-repeat 0 0.15em;
     padding-left: 18px;
+    cursor: pointer;
 }
 .treevue li.treevue-collapsed {
     background: url(closed.png) no-repeat 0 0.15em;
     padding-left: 18px;
+    cursor: pointer;
 }
 .treevue label:hover {
     background: rgba(0, 0, 0, 0.1);
@@ -22,6 +24,7 @@
     margin: 0 0 0 -12px;
     padding: 0 0 0 12px;
     border-left: solid 1px #CCC;
+    cursor: auto;
 }
 .treevue label {
     margin: -0.1em -1em -0.1em 0;
