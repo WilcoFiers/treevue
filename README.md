@@ -108,6 +108,20 @@ Treevue has successfully been tested with:
 - NVDA 2013.1 on Firefox
 - NVDA 2010.1 on Firefox
 
+**Warming**: Unfortunately some serious problems have been encountered with 
+JAWS 14 and 15. Because of this it is currently not recommended to rely on this 
+plugin alone to expose information and functionality on your website without 
+providing a conforming alternative version.
+
+## Known problems
+(Tested with JAWS 15 in IE and Firefox)
+- JAWS does not support the 'aria-selected' property
+- In JAWS, the name of a treeview item will incorrectly include it's decendents
+- JAWS does not expose the arrow key events because autoforms mode does not trigger with tree views
+- Chrome does not communicate the name of treeview items.
+- In Firefox with NVDA, aria-selected is assumed if it is anywhere on the treeview
+
+
 # Upcoming Features
 - Additional style examples
 - Persistence through local storage
