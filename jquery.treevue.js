@@ -21,6 +21,8 @@
         collapseCls   = 'treevue-collapsed',
         selectedCls   = 'treevue-selected',
         disableCls    = 'treevue-disabled',
+        useAriaCls    = 'treevue-aria-on',
+        useArrowsCls  = 'treevue-arrowkeys-on',
         // Text for l10n
         textExpanded  = 'Collapse node',
         textCollapsed = 'Expand node',
@@ -44,7 +46,7 @@
             attr(fallbackAria);
     
     branchFallback = $('<span class="treevue_fallback_branch">' + 
-                       '<button tabindex="-1">' + textExpanded +
+                       '<button>' + textExpanded +
                        '</button></span>').
             css(fallbackCss).
             attr(fallbackAria);
@@ -79,12 +81,26 @@
     /**
      * Add ARIA roles
      */
-    function addAriaTreeRoles(trees) {
-        trees.find('li').attr(role, 'treeitem'); // define tree nodes
-                // define branches
-        trees.find('ul, ol').attr(role, 'group').before(branchFallback).
-                closest('li').attr(ariaExp, true).addClass(expandedCls);
+    function addAriaTreeRoles(trees, options) {
+        var fallback,
+            // define tree nodes
+            treeitems = trees.find('li').attr(role, 'treeitem'),
+            // define branches
+            group = trees.find('ul, ol');
         
+        if (group.length !== 0) {
+            fallback = branchFallback.clone();
+            if (options.useArrowKeys) {
+                fallback.find('button').attr('tabindex', -1);
+            }
+            if (options.useAria) {
+                group.attr(role, 'group');
+            }
+            group.closest('li')
+                .prepend(fallback).attr(ariaExp, true)
+                .addClass(expandedCls);
+        }
+            
         // Collapse nodes nested within a list with aria-hidden
         trees.find('ul[aria-hidden=true], ' +
                    'ol[aria-hidden=true]').
@@ -102,10 +118,14 @@
     /**
      * Where checkboxes are included allow selection
      */
-    function addAriaSelectStates(trees) {
+    function addAriaSelectStates(trees, options) {
         trees.find(':checkbox').each(function () {
-            var boxes,
-                $this = $(this).attr('tabindex', -1);
+            var boxes, 
+                $this = $(this);
+            if (options.useArrowKeys) {
+                $this.attr('tabindex', -1);
+            }
+
             if ($this.prop('checked')) {
                 $this.addClass(selectedCls).
                         closest('li').attr(ariaSel, true);
@@ -122,22 +142,37 @@
                 }
             }
         }).closest('.treevue').attr('aria-multiselectable', true);
-
     }
     
+
     /**
      * TreeVue jQuery plugin; accessible treeview
      */
-    $.fn.treevue = function() {
-        this.addClass('treevue').find('li').attr('tabindex', -1);
+    $.fn.treevue = function(options) {
+        if (typeof options === 'undefined') {
+            options = {};
+        }
+        options.useAria = options.useAria || true;
+        options.useArrowKeys = options.useArrowKeys || true;
+
+        this.addClass('treevue');
         
         // Add WAI-ARIA role and state
-        addAriaTreeRoles(this);
-        addAriaSelectStates(this);
+        addAriaTreeRoles(this, options);
+        addAriaSelectStates(this, options);
         
-        this.find('> :first-child').
+        if (options.useAria) {
+            this.addClass(useAriaCls);
+        }
+
+        if (options.useArrowKeys) {
+            this.addClass(useArrowsCls)
+                .find('li').attr('tabindex', -1);
+
+            this.find('> :first-child').
                 attr('tabindex', 0).addClass(focusClass).
                 prepend(treeFallback);
+        }        
         return this;
     };
     
@@ -179,7 +214,7 @@
          */
         function focusItem(elm) {
             var tree = elm.closest('.treevue');
-            if (tree.length === 1) {
+            if (tree.length === 1 && tree.hasClass(useArrowsCls)) {
                 tree.find('.' + focusClass).removeClass(focusClass).attr(
                         'tabindex', -1);
                 
@@ -263,7 +298,9 @@
         /**
          * keyboard input
          */
-        }).on('keydown', '.treevue li', function (event) {
+        }).on('keydown',
+                '.treevue.'+ useArrowsCls + ' li',
+                function (event) {
             var expanded, checkbox,
                 keyCode = event.keyCode,
                 $this = $(this);
@@ -332,6 +369,11 @@
         // Toggle the branch when clicking the fallback button
         }).on('click', '.treevue_fallback_branch button', function () {
             toggleBranch($(this).closest('li'));
+
+        }).on('focus', '.treevue_fallback_branch', function () {
+            $(this).parent().addClass('treevue_outline');
+        }).on('blur', '.treevue_fallback_branch', function () {
+            $(this).parent().removeClass('treevue_outline');
         });
     });
     

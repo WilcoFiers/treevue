@@ -69,11 +69,11 @@
      * @param   Array   An array containing node objects for treevue
      * @return  Node    A treevue ul element
      */
-    $.treevue = function (json, ns) {
+    $.treevue = function (json, ns, options) {
         namespace = (ns ? ns + '-' : '');
         return $('<ul />').
                 append($.map(json, createTreeNode)).
-                treevue();
+                treevue(options);
     };
     
 }(jQuery));
