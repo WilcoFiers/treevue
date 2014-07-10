@@ -56,6 +56,13 @@ Example:
         </ul></li>
     </ul>
 
+# Options
+Optionally, an object can be passed to the tree view, allowing to set 
+options. Currenlty, only one option is available, the `useAria` option, 
+which is set to true by default. Use options as followed:
+
+    $('ul.tree').treevue({useAria: false});
+
 # Events
 Treevue triggers serveral custom events. The `treevue:expand` and 
 `treevue:collapse` events are triggered whenever a branch is expanded or 
