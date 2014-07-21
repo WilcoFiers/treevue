@@ -170,7 +170,9 @@
         if (typeof options === 'undefined') {
             options = {};
         }
-        options.useAria = options.useAria || true;
+        if (typeof options.useAria === 'undefined') {
+            options.useAria = true;
+        }
 
         this.addClass('treevue');
         
